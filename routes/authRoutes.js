@@ -8,11 +8,17 @@ module.exports = app => {
     })
   );
 
-  app.get('/auth/google/callback', passport.authenticate('google'));
+  app.get(
+    '/auth/google/callback',
+    passport.authenticate('google'),
+      (req, res) => {
+        res.redirect('/surveys');
+      }
+    );
   
   app.get('/api/logout', (req, res) => {
     req.logout();
-    res.send(req.user); // send back in a json format
+    res.redirect('/'); // send back in a json format
   })
 
   app.get('/api/current_user', (req, res) => {
